@@ -12,6 +12,7 @@ env:
 jobs:
   setup:
     runs-on: ubuntu-24.04
+    timeout-minutes: 10
     outputs:
       VERSION: ${{ steps.set-environment-variables.outputs.VERSION }}
     steps:
@@ -35,6 +36,7 @@ jobs:
   build-extension-chrome:
     needs: setup
     runs-on: ubuntu-24.04
+    timeout-minutes: 30
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -58,6 +60,7 @@ jobs:
   build-extension-firefox:
     needs: setup
     runs-on: ubuntu-24.04
+    timeout-minutes: 30
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -81,6 +84,7 @@ jobs:
   release:
     needs: [setup, build-extension-chrome, build-extension-firefox]
     runs-on: ubuntu-24.04
+    timeout-minutes: 10
     steps:
       - name: Download Chrome extension build
         uses: actions/download-artifact@v3
